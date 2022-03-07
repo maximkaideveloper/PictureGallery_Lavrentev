@@ -1,0 +1,36 @@
+﻿<Window x:Class="PictureGallery_System_Lavrentev.UserGallery_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PictureGallery_System_Lavrentev"
+        mc:Ignorable="d"
+        Title="Приложение картинной галереи" Height="720" Width="1080" MinWidth="1450" MinHeight="800" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FFE6F6FF"/>
+            <Setter Property="BorderBrush" Value="#FFD2D9DE"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button Name="CloseButton" Content="Выход из системы" Grid.Row="0" Grid.Column="0" Margin="20, 15, 15, 15" FontSize="16" Click="CloseButton_Click"/>
+        <Button Name="MaterialsButton" Content="Материалы" Grid.Row="0" Grid.Column="1" Click="MaterialsButton_Click" Margin="15, 15, 15, 15" FontSize="16"/>
+        <Button Name="NewsButton" Content="Новости" Grid.Row="0" Grid.Column="2" Margin="15, 15, 15, 15" FontSize="16" Click="NewsButton_Click"/>
+        <Button Name="ProfileButton" Content="Личный кабинет" Grid.Row="0" Grid.Column="3" Click="ProfileButton_Click" Margin="15, 15, 20, 15" FontSize="16"/>
+
+        <ScrollViewer Name="MainScrollViewer" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalScrollBarVisibility="Auto"/>
+    </Grid>
+</Window>

@@ -1,0 +1,564 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище PictureGallery_LavrentevModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Comment_Id" />
+          </Key>
+          <Property Name="Comment_Id" Type="int" Nullable="false" />
+          <Property Name="Post_Id" Type="int" Nullable="false" />
+          <Property Name="User_Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Like_Number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment_Likes">
+          <Key>
+            <PropertyRef Name="Comment_Like_Id" />
+          </Key>
+          <Property Name="Comment_Like_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comment_Id" Type="int" Nullable="false" />
+          <Property Name="User_Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Post_Id" />
+          </Key>
+          <Property Name="Post_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Upload_Date" Type="datetime" Nullable="false" />
+          <Property Name="Image_FileName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Text" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Like_Number" Type="int" Nullable="false" />
+          <Property Name="Post_Type_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post_Likes">
+          <Key>
+            <PropertyRef Name="Post_Like_Id" />
+          </Key>
+          <Property Name="Post_Like_Id" Type="int" Nullable="false" />
+          <Property Name="Post_Id" Type="int" Nullable="false" />
+          <Property Name="User_Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post_Type">
+          <Key>
+            <PropertyRef Name="Post_Type_Id" />
+          </Key>
+          <Property Name="Post_Type_Id" Type="int" Nullable="false" />
+          <Property Name="Post_Type_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="int" Nullable="false" />
+          <Property Name="Role_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Login" />
+          </Key>
+          <Property Name="User_Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Signup_Date" Type="datetime" Nullable="false" />
+          <Property Name="Role_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comment_Likes_Comment">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="Comment_Likes" Type="Self.Comment_Likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Comment_Id" />
+            </Principal>
+            <Dependent Role="Comment_Likes">
+              <PropertyRef Name="Comment_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Likes_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment_Likes" Type="Self.Comment_Likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Login" />
+            </Principal>
+            <Dependent Role="Comment_Likes">
+              <PropertyRef Name="User_Login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Post_Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Post_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Login" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="User_Login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Likes_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Post_Likes" Type="Self.Post_Likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Post_Id" />
+            </Principal>
+            <Dependent Role="Post_Likes">
+              <PropertyRef Name="Post_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Likes_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Post_Likes" Type="Self.Post_Likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Login" />
+            </Principal>
+            <Dependent Role="Post_Likes">
+              <PropertyRef Name="User_Login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Post_Type">
+          <End Role="Post_Type" Type="Self.Post_Type" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post_Type">
+              <PropertyRef Name="Post_Type_Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="Post_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище PictureGallery_LavrentevModelContainer">
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment_Likes" EntityType="Self.Comment_Likes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post_Likes" EntityType="Self.Post_Likes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post_Type" EntityType="Self.Post_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comment_Likes_Comment" Association="Self.FK_Comment_Likes_Comment">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Comment_Likes" EntitySet="Comment_Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Likes_User" Association="Self.FK_Comment_Likes_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment_Likes" EntitySet="Comment_Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Post" Association="Self.FK_Comment_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_User" Association="Self.FK_Comment_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Likes_Post" Association="Self.FK_Post_Likes_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Post_Likes" EntitySet="Post_Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Likes_User" Association="Self.FK_Post_Likes_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Post_Likes" EntitySet="Post_Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Post_Type" Association="Self.FK_Post_Post_Type">
+            <End Role="Post_Type" EntitySet="Post_Type" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PictureGallery_LavrentevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Comment_Id" />
+          </Key>
+          <Property Name="Comment_Id" Type="Int32" Nullable="false" />
+          <Property Name="Post_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Like_Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comment_Likes" Relationship="Self.FK_Comment_Likes_Comment" FromRole="Comment" ToRole="Comment_Likes" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Comment_Post" FromRole="Comment" ToRole="Post" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Comment_User" FromRole="Comment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Comment_Likes">
+          <Key>
+            <PropertyRef Name="Comment_Like_Id" />
+          </Key>
+          <Property Name="Comment_Like_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comment_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK_Comment_Likes_Comment" FromRole="Comment_Likes" ToRole="Comment" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Comment_Likes_User" FromRole="Comment_Likes" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Post_Id" />
+          </Key>
+          <Property Name="Post_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Upload_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Image_FileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Like_Number" Type="Int32" Nullable="false" />
+          <Property Name="Post_Type_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK_Comment_Post" FromRole="Post" ToRole="Comment" />
+          <NavigationProperty Name="Post_Likes" Relationship="Self.FK_Post_Likes_Post" FromRole="Post" ToRole="Post_Likes" />
+          <NavigationProperty Name="Post_Type" Relationship="Self.FK_Post_Post_Type" FromRole="Post" ToRole="Post_Type" />
+        </EntityType>
+        <EntityType Name="Post_Likes">
+          <Key>
+            <PropertyRef Name="Post_Like_Id" />
+          </Key>
+          <Property Name="Post_Like_Id" Type="Int32" Nullable="false" />
+          <Property Name="Post_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Post_Likes_Post" FromRole="Post_Likes" ToRole="Post" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Post_Likes_User" FromRole="Post_Likes" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Post_Type">
+          <Key>
+            <PropertyRef Name="Post_Type_Id" />
+          </Key>
+          <Property Name="Post_Type_Id" Type="Int32" Nullable="false" />
+          <Property Name="Post_Type_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Post_Post_Type" FromRole="Post_Type" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_Id" />
+          </Key>
+          <Property Name="Role_Id" Type="Int32" Nullable="false" />
+          <Property Name="Role_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_Login" />
+          </Key>
+          <Property Name="User_Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Signup_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Role_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.FK_Comment_User" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="Comment_Likes" Relationship="Self.FK_Comment_Likes_User" FromRole="User" ToRole="Comment_Likes" />
+          <NavigationProperty Name="Post_Likes" Relationship="Self.FK_Post_Likes_User" FromRole="User" ToRole="Post_Likes" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Comment_Likes_Comment">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="Comment_Likes" Type="Self.Comment_Likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Comment_Id" />
+            </Principal>
+            <Dependent Role="Comment_Likes">
+              <PropertyRef Name="Comment_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Post_Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Post_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Login" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="User_Login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Likes_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment_Likes" Type="Self.Comment_Likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Login" />
+            </Principal>
+            <Dependent Role="Comment_Likes">
+              <PropertyRef Name="User_Login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Likes_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Post_Likes" Type="Self.Post_Likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Post_Id" />
+            </Principal>
+            <Dependent Role="Post_Likes">
+              <PropertyRef Name="Post_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Post_Type">
+          <End Role="Post_Type" Type="Self.Post_Type" Multiplicity="1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post_Type">
+              <PropertyRef Name="Post_Type_Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="Post_Type_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Likes_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Post_Likes" Type="Self.Post_Likes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_Login" />
+            </Principal>
+            <Dependent Role="Post_Likes">
+              <PropertyRef Name="User_Login" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PictureGallery_LavrentevEntities10" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comment" EntityType="Self.Comment" />
+          <EntitySet Name="Comment_Likes" EntityType="Self.Comment_Likes" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="Post_Likes" EntityType="Self.Post_Likes" />
+          <EntitySet Name="Post_Type" EntityType="Self.Post_Type" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Comment_Likes_Comment" Association="Self.FK_Comment_Likes_Comment">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Comment_Likes" EntitySet="Comment_Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Post" Association="Self.FK_Comment_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_User" Association="Self.FK_Comment_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Likes_User" Association="Self.FK_Comment_Likes_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment_Likes" EntitySet="Comment_Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Likes_Post" Association="Self.FK_Post_Likes_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Post_Likes" EntitySet="Post_Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Post_Type" Association="Self.FK_Post_Post_Type">
+            <End Role="Post_Type" EntitySet="Post_Type" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Likes_User" Association="Self.FK_Post_Likes_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Post_Likes" EntitySet="Post_Likes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище PictureGallery_LavrentevModelContainer" CdmEntityContainer="PictureGallery_LavrentevEntities10">
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="PictureGallery_LavrentevModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Comment_Id" ColumnName="Comment_Id" />
+                <ScalarProperty Name="Post_Id" ColumnName="Post_Id" />
+                <ScalarProperty Name="User_Login" ColumnName="User_Login" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Like_Number" ColumnName="Like_Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment_Likes">
+            <EntityTypeMapping TypeName="PictureGallery_LavrentevModel.Comment_Likes">
+              <MappingFragment StoreEntitySet="Comment_Likes">
+                <ScalarProperty Name="Comment_Like_Id" ColumnName="Comment_Like_Id" />
+                <ScalarProperty Name="Comment_Id" ColumnName="Comment_Id" />
+                <ScalarProperty Name="User_Login" ColumnName="User_Login" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="PictureGallery_LavrentevModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="Post_Id" ColumnName="Post_Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Upload_Date" ColumnName="Upload_Date" />
+                <ScalarProperty Name="Image_FileName" ColumnName="Image_FileName" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Like_Number" ColumnName="Like_Number" />
+                <ScalarProperty Name="Post_Type_Id" ColumnName="Post_Type_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post_Likes">
+            <EntityTypeMapping TypeName="PictureGallery_LavrentevModel.Post_Likes">
+              <MappingFragment StoreEntitySet="Post_Likes">
+                <ScalarProperty Name="Post_Like_Id" ColumnName="Post_Like_Id" />
+                <ScalarProperty Name="Post_Id" ColumnName="Post_Id" />
+                <ScalarProperty Name="User_Login" ColumnName="User_Login" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post_Type">
+            <EntityTypeMapping TypeName="PictureGallery_LavrentevModel.Post_Type">
+              <MappingFragment StoreEntitySet="Post_Type">
+                <ScalarProperty Name="Post_Type_Id" ColumnName="Post_Type_Id" />
+                <ScalarProperty Name="Post_Type_Name" ColumnName="Post_Type_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="PictureGallery_LavrentevModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PictureGallery_LavrentevModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="PictureGallery_LavrentevModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="User_Login" ColumnName="User_Login" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Signup_Date" ColumnName="Signup_Date" />
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
