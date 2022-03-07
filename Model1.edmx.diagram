@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b449392fda2141a1a1788a729ac4e318" Name="Diagram1">
+        <EntityTypeShape EntityType="PictureGallery_LavrentevModel.Comment" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PictureGallery_LavrentevModel.Comment_Likes" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PictureGallery_LavrentevModel.Post" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PictureGallery_LavrentevModel.Post_Likes" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PictureGallery_LavrentevModel.Post_Type" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="PictureGallery_LavrentevModel.Role" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="PictureGallery_LavrentevModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PictureGallery_LavrentevModel.User" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="PictureGallery_LavrentevModel.FK_Comment_Likes_Comment" ManuallyRouted="false" />
+        <AssociationConnector Association="PictureGallery_LavrentevModel.FK_Comment_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="PictureGallery_LavrentevModel.FK_Comment_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PictureGallery_LavrentevModel.FK_Comment_Likes_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PictureGallery_LavrentevModel.FK_Post_Likes_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="PictureGallery_LavrentevModel.FK_Post_Post_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="PictureGallery_LavrentevModel.FK_Post_Likes_User" ManuallyRouted="false" />
+        <AssociationConnector Association="PictureGallery_LavrentevModel.FK_User_Role" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

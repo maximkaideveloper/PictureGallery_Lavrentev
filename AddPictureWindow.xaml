@@ -1,0 +1,58 @@
+﻿<Window x:Class="PictureGallery_System_Lavrentev.AddPictureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PictureGallery_System_Lavrentev"
+        mc:Ignorable="d"
+        Title="Публикация новой картины" Height="450" Width="650" MaxHeight="450" MaxWidth="650" MinHeight="450" MinWidth="650" WindowStartupLocation="CenterScreen" Closed="Window_Closed">
+
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="20 0 0 0"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Background" Value="#FFE6F6FF"/>
+            <Setter Property="BorderBrush" Value="#FFD2D9DE"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="20 0 20 0"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="160"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Название картины:" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <TextBlock Text="Автор картины:" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <TextBlock Text="Название файла изображения:" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+        <TextBlock Text="Описание картины:" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Top" Margin="20 20 20 0"/>
+
+        <TextBox x:Name="nameTextBox" Grid.Column="2" Grid.Row="0"/>
+        <TextBox x:Name="authorTextBox" Grid.Column="2" Grid.Row="1"/>
+        <TextBox x:Name="fileNameTextBox" Grid.Column="2" Grid.Row="2"/>
+        <TextBox x:Name="descTextBox" Grid.Column="2" Grid.Row="3" VerticalAlignment="Top" Margin="20 20 20 0" Height="130" TextWrapping="Wrap" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto"/>
+
+        <Button Name="CancelButton" Content="Отмена" Grid.Column="0" Grid.Row="4" Click="CancelButton_Click" HorizontalAlignment="Left"/>
+        <Button Name="OkButton" Content="Опубликовать" Grid.Column="2" Grid.Row="4" Click="OkButton_Click" HorizontalAlignment="Right"/>
+    </Grid>
+</Window>
